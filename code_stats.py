@@ -7,7 +7,7 @@ load_dotenv()
 
 
 
-def get_stats(project_root: str = os.getcwd(), entry_point: str = "api.py") -> dict:
+def get_stats(project_root: str = os.getcwd(), entry_point: str = "api.py", route_function:str ="register_api") -> dict:
     # todo: handle wild card imports
     data = {}
     work_dir = project_root
@@ -15,7 +15,7 @@ def get_stats(project_root: str = os.getcwd(), entry_point: str = "api.py") -> d
     with open(api_file, "r") as a:
         api_txt = a.read()
         print(api_txt)
-    raw_url_paths = re.findall(r"register_api\([^)]+\)", api_txt)
+    raw_url_paths = re.findall(re.compile(f"{route_function}\([^)]+\)"), api_txt)
     print(raw_url_paths)
     url_paths = []
     for rpath in raw_url_paths:
